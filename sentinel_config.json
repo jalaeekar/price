@@ -1,8 +1,55 @@
 {
-    "last_update": "2026-06-04 22:39:12.917555",
-    "market_regime": "trending",
-    "direction": "flat",
-    "target_tp_pips": 15.0,
-    "target_sl_pips": 12.0,
-    "spread_max_allowed_points": 20
+    "last_update": "2026-06-04 23:14:11.164267",
+    "assets": {
+        "EURUSD=X": {
+            "regime": "trending",
+            "direction": "sell",
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 20.0,
+            "target_sl_pips": 12.0,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "GBPUSD=X": {
+            "regime": "trending",
+            "direction": "sell",
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 20.0,
+            "target_sl_pips": 12.0,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "AUDUSD=X": {
+            "regime": "range",
+            "direction": "sell",
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 20.0,
+            "target_sl_pips": 12.0,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "USDCAD=X": {
+            "regime": "range",
+            "direction": "buy",
+            "target_tp1_pips": 20.6,
+            "target_tp2_pips": 49.4,
+            "target_sl_pips": 20.6,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "USDJPY=X": {
+            "regime": "range",
+            "direction": "buy",
+            "target_tp1_pips": 721.5,
+            "target_tp2_pips": 1731.5,
+            "target_sl_pips": 721.5,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        }
+    }
 }
