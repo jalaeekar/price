@@ -217,7 +217,29 @@ def detect_institutional_order_blocks(df, lookback=50):
                 break
                 
     return order_blocks
-
+# ======================================================================
+# 4. QUANTITATIVE ML ENGINE
+# ======================================================================
+def run_ml_prediction_for_asset(df):
+    """ آموزش لحظه‌ای هوش مصنوعی روی ترکیب قیمت و حجم """
+    df_ml = df.copy()
+    df_ml['rsi'] = calculate_rsi(df_ml['Close'])
+    df_ml['bb_width'] = calculate_bollinger_width(df_ml)
+    vwap_line = calculate_vwap(df_ml)
+    df_ml['vwap_dist'] = df_ml['Close'] - vwap_line
+    df_ml['returns'] = df_ml['Close'].pct_change()
+    
+    df_ml['target'] = np.where(df_ml['Close'].shift(-1) > df_ml['Close'], 1, 0)
+    df_ml.dropna(inplace=True)
+    
+    X = df_ml[['rsi', 'bb_width', 'vwap_dist', 'returns']]
+    y = df_ml['target']
+    
+    if len(X) < 100: return 0.5 
+    
+    model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
+    model.fit(X.iloc[:-1], y.iloc[:-1])
+    return model.predict_proba(X.iloc[[-1]])[0][1]
 # ======================================================================
 # 5. MULTI-TIMEFRAME QUANT ENGINE & MAIN LOOP (موتور ۳ بُعدی زنده)
 # ======================================================================
