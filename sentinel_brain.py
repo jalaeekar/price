@@ -369,7 +369,7 @@ def generate_god_mode_strategy():
         }
 
     # ======================================================================
-    # 9. MASTER JSON OUTPUT & TELEGRAM REPORTING
+    # 9. MASTER JSON OUTPUT & TELEGRAM REPORTING (خروجی و گزارش‌گیری کلان)
     # ======================================================================
     output_data = {
         "last_update": str(datetime.datetime.utcnow()) + " UTC",
@@ -377,8 +377,13 @@ def generate_god_mode_strategy():
         "assets": portfolio_results
     }
     
-    with open("sentinel_config.json", "w") as f:
-        json.dump(output_data, f, indent=4)
+    # اطمینان از ذخیره فایل
+    try:
+        with open("sentinel_config.json", "w") as f:
+            json.dump(output_data, f, indent=4)
+        print("[SUCCESS] sentinel_config.json saved.")
+    except Exception as e:
+        print(f"[ERROR] Could not save JSON: {e}")
         
     msg = f"<b>🏛 Sentinel V8 (SMC Sniper)</b>\n"
     msg += f"⏱ {datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}\n"
@@ -400,4 +405,8 @@ def generate_god_mode_strategy():
         msg += "━━━━━━━━━━━━━━━━━━━━━━\n"
             
     send_telegram_alert(msg)
-    print("\n[SUCCESS] V8 SMC Sniper Execution Completed. Master JSON generated and Telegram sent.")
+    print("\n[SUCCESS] V8 SMC Sniper Execution Completed.")
+
+# این قسمت بسیار مهم است تا برنامه اجرا شود
+if __name__ == "__main__":
+    generate_god_mode_strategy()
