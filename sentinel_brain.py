@@ -403,6 +403,7 @@ def run_ml_prediction_for_asset(df):
     
     return prediction_probability
 
+
 # ======================================================================
 # 7. QUANTUM ENGINE: MAIN STRATEGY & EXECUTION (موتور اصلی و اجرای استراتژی)
 # ======================================================================
@@ -410,7 +411,7 @@ def run_ml_prediction_for_asset(df):
 def generate_god_mode_strategy():
     """
     موتور اصلی سیستم (Quantum Engine V12).
-    ایجاد Entry Zone و Market State Snapshot برای جلوگیری از تاخیر زمانی MQL5.
+    شامل رفع باگ محاسباتی JPY، جایگزینی مناطق 0.0، و فیلتر خستگی بازار (RSI Exhaustion).
     """
     run_time_utc = datetime.datetime.utcnow()
     print(f"\n[START] Quantum Engine V12 - {run_time_utc.strftime('%Y-%m-%d %H:%M UTC')}")
@@ -450,6 +451,11 @@ def generate_god_mode_strategy():
         df_m15['bb_width'] = calculate_bollinger_width(df_m15)
         poc_current = calculate_poc(df_m15, lookback=100)
         
+        # ======================================================================
+        # حل مشکل محاسبه پیپ برای ین ژاپن (JPY)
+        # ======================================================================
+        pip_multiplier = 100 if "JPY" in symbol else 10000
+        
         tr = pd.concat([
             df_m15['High'] - df_m15['Low'], 
             np.abs(df_m15['High'] - df_m15['Close'].shift()), 
@@ -472,7 +478,8 @@ def generate_god_mode_strategy():
         ml_prob_up = run_ml_prediction_for_asset(df_m15)
         
         direction = "flat"
-        atr_pips = (current['atr'] * 10000)
+        # استفاده از ضریب صحیح برای محاسبه پیپ ATR
+        atr_pips = (current['atr'] * pip_multiplier)
         price_current = current['Close']
         bb_width_current = current['bb_width']
         current_vwap = current['vwap']
@@ -491,39 +498,36 @@ def generate_god_mode_strategy():
 
         sl_pips = round(atr_pips * 1.5, 1)
         
-        # متغیرهای جدید برای محدوده ورود به جای قیمت ثابت
         entry_zone_min = 0.0
         entry_zone_max = 0.0
 
         # ======================================================================
-        # ماتریس ورود پیشرفته (تخصیص Entry Zone)
+        # ماتریس ورود (تخصیص Entry Zone)
         # ======================================================================
         if is_crisis:
             if liquidity_sweep == "bullish_sweep" and target_trend != "sell":
                 direction = "buy"
                 sl_pips = round(atr_pips * 2.5, 1) 
-                entry_zone_min = price_current - (atr_pips * 0.5 / 10000)
-                entry_zone_max = price_current + (atr_pips * 0.5 / 10000)
+                entry_zone_min = price_current - (atr_pips * 0.5 / pip_multiplier)
+                entry_zone_max = price_current + (atr_pips * 0.5 / pip_multiplier)
                 
             elif liquidity_sweep == "bearish_sweep" and target_trend != "buy":
                 direction = "sell"
                 sl_pips = round(atr_pips * 2.5, 1)
-                entry_zone_min = price_current - (atr_pips * 0.5 / 10000)
-                entry_zone_max = price_current + (atr_pips * 0.5 / 10000)
+                entry_zone_min = price_current - (atr_pips * 0.5 / pip_multiplier)
+                entry_zone_max = price_current + (atr_pips * 0.5 / pip_multiplier)
         else:
             if target_trend == "buy" and testing_bullish_ob and len(fvgs["bullish"]) > 0:
                 direction = "buy"
                 sl_price = min(ob_data["bullish_ob_bottom"], ob_data["dealing_low"])
-                sl_pips = max(abs(price_current - sl_price) * 10000 + 2.0, 10.0)
-                # محدوده ورود بین کف اوردر بلاک تا سقف اوردر بلاک
+                sl_pips = max(abs(price_current - sl_price) * pip_multiplier + 2.0, 10.0)
                 entry_zone_min = round(ob_data["bullish_ob_bottom"], 5)
                 entry_zone_max = round(ob_data["bullish_ob_top"], 5)
                 
             elif target_trend == "sell" and testing_bearish_ob and len(fvgs["bearish"]) > 0:
                 direction = "sell"
                 sl_price = max(ob_data["bearish_ob_top"], ob_data["dealing_high"])
-                sl_pips = max(abs(sl_price - price_current) * 10000 + 2.0, 10.0)
-                # محدوده ورود بین کف اوردر بلاک نزولی تا سقف آن
+                sl_pips = max(abs(sl_price - price_current) * pip_multiplier + 2.0, 10.0)
                 entry_zone_min = round(ob_data["bearish_ob_bottom"], 5)
                 entry_zone_max = round(ob_data["bearish_ob_top"], 5)
 
@@ -537,21 +541,37 @@ def generate_god_mode_strategy():
             if not session_active: 
                 direction = "flat"
                 veto_reason = "Out of Session"
+                
+            # فیلتر جدید: جلوگیری از ورود در نقاط خستگی و اشباع بازار (RSI Exhaustion)
+            elif direction == "buy" and current_rsi > 75.0:
+                direction = "flat"
+                veto_reason = "Overbought Exhaustion (RSI > 75)"
+            elif direction == "sell" and current_rsi < 25.0:
+                direction = "flat"
+                veto_reason = "Oversold Exhaustion (RSI < 25)"
+                
             elif not is_crisis:
                 if direction == "buy" and ml_prob_up < dynamic_threshold: 
-                    direction = "flat"; veto_reason = f"XGBoost (<{dynamic_threshold:.2f})"
+                    direction = "flat"
+                    veto_reason = f"XGBoost (<{dynamic_threshold:.2f})"
                 elif direction == "sell" and ml_prob_up > (1 - dynamic_threshold): 
-                    direction = "flat"; veto_reason = f"XGBoost (>{(1-dynamic_threshold):.2f})"
+                    direction = "flat"
+                    veto_reason = f"XGBoost (>{(1-dynamic_threshold):.2f})"
                 elif direction == "buy" and price_current > current_vwap: 
-                    direction = "flat"; veto_reason = "Above VWAP"
+                    direction = "flat"
+                    veto_reason = "Above VWAP"
                 elif direction == "sell" and price_current < current_vwap: 
-                    direction = "flat"; veto_reason = "Below VWAP"
+                    direction = "flat"
+                    veto_reason = "Below VWAP"
             else:
                 if direction == "buy" and ml_prob_up < 0.40: 
-                    direction = "flat"; veto_reason = "Crisis ML Veto"
+                    direction = "flat"
+                    veto_reason = "Crisis ML Veto"
                 elif direction == "sell" and ml_prob_up > 0.60: 
-                    direction = "flat"; veto_reason = "Crisis ML Veto"
+                    direction = "flat"
+                    veto_reason = "Crisis ML Veto"
 
+        # فیلتر همبستگی پیرسون
         if direction != "flat" and not corr_matrix.empty:
             for active_sym in active_positions:
                 if symbol in corr_matrix.columns and active_sym in corr_matrix.columns:
@@ -567,9 +587,10 @@ def generate_god_mode_strategy():
         # ======================================================================
         # سیستم تارگت‌ها، مدیریت ریسک Kelly و Market Snapshot
         # ======================================================================
-        dist_to_high = abs(ob_data["dealing_high"] - price_current) * 10000
-        dist_to_low = abs(price_current - ob_data["dealing_low"]) * 10000
-        dist_to_poc = abs(price_current - poc_current) * 10000
+        # جایگزینی ضریب 10000 با pip_multiplier برای محاسبه دقیق تمام ارزها
+        dist_to_high = abs(ob_data["dealing_high"] - price_current) * pip_multiplier
+        dist_to_low = abs(price_current - ob_data["dealing_low"]) * pip_multiplier
+        dist_to_poc = abs(price_current - poc_current) * pip_multiplier
         
         if direction != "flat":
             if is_crisis:
@@ -586,24 +607,21 @@ def generate_god_mode_strategy():
                 active_risk = round(min(active_risk * 1.2, 3.0), 2)
                 
         else:
-            # در حالت FLAT (آماده‌باش)، تارگت‌ها و مناطق ورودی که ربات زیر نظر دارد را محاسبه می‌کنیم
+            # محاسبات تارگت در حالت FLAT
             tp1_pips = round(atr_pips * 2.0, 1)
             tp2_pips = round(max(dist_to_high, dist_to_low, dist_to_poc), 1)
             active_risk = DEFAULT_RISK_PERCENT
             
-            # نشان دادن منطقه ورود (راداری که ربات روی آن قفل کرده است، حتی اگر سیگنال خاموش باشد)
+            # حل مشکل 0.0: اگر اوردر بلاک معتبری وجود داشت، محدوده آن را ثبت کن؛ در غیر این صورت قیمت فعلی
             if target_trend == "buy":
-                entry_zone_min = round(ob_data["bullish_ob_bottom"], 5)
-                entry_zone_max = round(ob_data["bullish_ob_top"], 5)
+                entry_zone_min = round(ob_data["bullish_ob_bottom"], 5) if ob_data["bullish_valid"] else round(price_current, 5)
+                entry_zone_max = round(ob_data["bullish_ob_top"], 5) if ob_data["bullish_valid"] else round(price_current, 5)
             else:
-                entry_zone_min = round(ob_data["bearish_ob_bottom"], 5)
-                entry_zone_max = round(ob_data["bearish_ob_top"], 5)
+                entry_zone_min = round(ob_data["bearish_ob_bottom"], 5) if ob_data["bearish_valid"] else round(price_current, 5)
+                entry_zone_max = round(ob_data["bearish_ob_top"], 5) if ob_data["bearish_valid"] else round(price_current, 5)
 
-        # تعیین تاریخ انقضای سیگنال (اعتبار فقط تا 2 ساعت پس از صدور)
         signal_expiry_str = (run_time_utc + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
 
-        # ذخیره تصویر لحظه‌ای بازار (Snapshot) برای چک کردن MQL5
-        # اضافه شدن روند کلان و رژیم بازار برای تطبیق دقیق‌تر در متاتریدر
         snapshot = {
             "analysis_price": round(price_current, 5),
             "vwap": round(current_vwap, 5),
@@ -628,7 +646,6 @@ def generate_god_mode_strategy():
             "vsa_confirmed": bool(vsa_anomaly),     
             "veto": veto_reason
         }
-
 
     # ======================================================================
     # 8. MASTER JSON EXPORT & TELEGRAM REPORTING
