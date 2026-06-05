@@ -1,13 +1,14 @@
 {
-    "last_update": "2026-06-05 11:22:57.057028 UTC",
-    "global_strategy": "SMC_OrderBlock_Mitigation",
+    "last_update": "2026-06-05 12:42:56.116826 UTC",
+    "global_strategy": "Titan_Engine_V11",
+    "session_active": true,
     "assets": {
         "EURUSD=X": {
             "regime": "trending",
             "direction": "flat",
-            "target_tp1_pips": 15.0,
-            "target_tp2_pips": 30.0,
-            "target_sl_pips": 5.1,
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 25.7,
+            "target_sl_pips": 6.1,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -15,9 +16,9 @@
         "GBPUSD=X": {
             "regime": "trending",
             "direction": "flat",
-            "target_tp1_pips": 15.0,
-            "target_tp2_pips": 30.0,
-            "target_sl_pips": 8.8,
+            "target_tp1_pips": 12.0,
+            "target_tp2_pips": 46.2,
+            "target_sl_pips": 9.0,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -25,9 +26,9 @@
         "AUDUSD=X": {
             "regime": "range",
             "direction": "flat",
-            "target_tp1_pips": 15.0,
-            "target_tp2_pips": 30.0,
-            "target_sl_pips": 4.2,
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 30.5,
+            "target_sl_pips": 5.0,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -35,19 +36,69 @@
         "USDCAD=X": {
             "regime": "range",
             "direction": "flat",
-            "target_tp1_pips": 15.0,
-            "target_tp2_pips": 30.0,
-            "target_sl_pips": 13.5,
+            "target_tp1_pips": 20.9,
+            "target_tp2_pips": 25.1,
+            "target_sl_pips": 15.7,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
         },
         "USDJPY=X": {
             "regime": "range",
-            "direction": "buy",
-            "target_tp1_pips": 1371.4,
-            "target_tp2_pips": 4571.5,
-            "target_sl_pips": 914.3,
+            "direction": "flat",
+            "target_tp1_pips": 857.2,
+            "target_tp2_pips": 1189.9,
+            "target_sl_pips": 642.9,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "EURJPY=X": {
+            "regime": "trending",
+            "direction": "flat",
+            "target_tp1_pips": 1387.2,
+            "target_tp2_pips": 3060.0,
+            "target_sl_pips": 1040.4,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "GBPAUD=X": {
+            "regime": "range",
+            "direction": "flat",
+            "target_tp1_pips": 20.5,
+            "target_tp2_pips": 28.0,
+            "target_sl_pips": 15.4,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "EURGBP=X": {
+            "regime": "range",
+            "direction": "flat",
+            "target_tp1_pips": 10.0,
+            "target_tp2_pips": 20.0,
+            "target_sl_pips": 5.4,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "AUDNZD=X": {
+            "regime": "range",
+            "direction": "flat",
+            "target_tp1_pips": 14.9,
+            "target_tp2_pips": 20.0,
+            "target_sl_pips": 11.2,
+            "risk_percent": 1.0,
+            "is_crisis": true,
+            "veto": ""
+        },
+        "CHFJPY=X": {
+            "regime": "range",
+            "direction": "flat",
+            "target_tp1_pips": 2195.7,
+            "target_tp2_pips": 4339.9,
+            "target_sl_pips": 1646.8,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
