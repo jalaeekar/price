@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-06-04 23:51:17.266631 UTC",
+    "last_update": "2026-06-05 02:02:20.031704 UTC",
     "global_strategy": "SMC_OrderBlock_Mitigation",
     "assets": {
         "EURUSD=X": {
@@ -7,7 +7,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 3.6,
+            "target_sl_pips": 3.0,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -17,7 +17,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 3.4,
+            "target_sl_pips": 3.9,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -27,7 +27,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 2.3,
+            "target_sl_pips": 5.9,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -37,7 +37,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 11.8,
+            "target_sl_pips": 10.4,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -47,7 +47,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 472.5,
+            "target_sl_pips": 605.3,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
