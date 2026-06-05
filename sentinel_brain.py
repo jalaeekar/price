@@ -586,20 +586,31 @@ def generate_god_mode_strategy():
                 active_risk = round(min(active_risk * 1.2, 3.0), 2)
                 
         else:
+            # در حالت FLAT (آماده‌باش)، تارگت‌ها و مناطق ورودی که ربات زیر نظر دارد را محاسبه می‌کنیم
             tp1_pips = round(atr_pips * 2.0, 1)
             tp2_pips = round(max(dist_to_high, dist_to_low, dist_to_poc), 1)
             active_risk = DEFAULT_RISK_PERCENT
-            entry_zone_min = round(price_current, 5)
-            entry_zone_max = round(price_current, 5)
+            
+            # نشان دادن منطقه ورود (راداری که ربات روی آن قفل کرده است، حتی اگر سیگنال خاموش باشد)
+            if target_trend == "buy":
+                entry_zone_min = round(ob_data["bullish_ob_bottom"], 5)
+                entry_zone_max = round(ob_data["bullish_ob_top"], 5)
+            else:
+                entry_zone_min = round(ob_data["bearish_ob_bottom"], 5)
+                entry_zone_max = round(ob_data["bearish_ob_top"], 5)
 
+        # تعیین تاریخ انقضای سیگنال (اعتبار فقط تا 2 ساعت پس از صدور)
         signal_expiry_str = (run_time_utc + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
 
         # ذخیره تصویر لحظه‌ای بازار (Snapshot) برای چک کردن MQL5
+        # اضافه شدن روند کلان و رژیم بازار برای تطبیق دقیق‌تر در متاتریدر
         snapshot = {
             "analysis_price": round(price_current, 5),
             "vwap": round(current_vwap, 5),
             "rsi": round(current_rsi, 2),
-            "atr_pips": round(atr_pips, 1)
+            "atr_pips": round(atr_pips, 1),
+            "macro_trend": target_trend,
+            "market_regime": market_regime
         }
 
         portfolio_results[symbol] = {
@@ -617,6 +628,7 @@ def generate_god_mode_strategy():
             "vsa_confirmed": bool(vsa_anomaly),     
             "veto": veto_reason
         }
+
 
     # ======================================================================
     # 8. MASTER JSON EXPORT & TELEGRAM REPORTING
