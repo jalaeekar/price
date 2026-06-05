@@ -1,20 +1,22 @@
 {
-    "last_update": "2026-06-05 13:34:25",
+    "last_update": "2026-06-05 13:43:56",
     "global_strategy": "Quantum_Engine_V12",
     "session_active": true,
     "assets": {
         "EURUSD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 1.15875,
-            "entry_zone_max": 1.15875,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 1.15875,
                 "vwap": 1.16309,
                 "rsi": 21.93,
-                "atr_pips": 8.3
+                "atr_pips": 8.3,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 16.6,
             "target_tp2_pips": 59.4,
             "target_sl_pips": 12.4,
@@ -26,15 +28,17 @@
         "GBPUSD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 1.34057,
-            "entry_zone_max": 1.34057,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 1.34057,
                 "vwap": 1.34365,
                 "rsi": 23.79,
-                "atr_pips": 10.1
+                "atr_pips": 10.1,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 20.2,
             "target_tp2_pips": 77.4,
             "target_sl_pips": 15.2,
@@ -46,15 +50,17 @@
         "AUDUSD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 0.71028,
-            "entry_zone_max": 0.71028,
+            "entry_zone_min": 0.71439,
+            "entry_zone_max": 0.71454,
             "market_state_snapshot": {
                 "analysis_price": 0.71028,
                 "vwap": 0.7151,
                 "rsi": 19.06,
-                "atr_pips": 5.3
+                "atr_pips": 5.3,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 10.5,
             "target_tp2_pips": 43.1,
             "target_sl_pips": 7.9,
@@ -66,15 +72,17 @@
         "USDCAD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 1.38917,
-            "entry_zone_max": 1.38917,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 1.38917,
                 "vwap": 1.38103,
                 "rsi": 67.58,
-                "atr_pips": 13.7
+                "atr_pips": 13.7,
+                "macro_trend": "buy",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 27.4,
             "target_tp2_pips": 28.7,
             "target_sl_pips": 20.5,
@@ -86,15 +94,17 @@
         "USDJPY=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 160.164,
-            "entry_zone_max": 160.164,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 160.164,
                 "vwap": 159.32918,
                 "rsi": 65.62,
-                "atr_pips": 1113.6
+                "atr_pips": 1113.6,
+                "macro_trend": "buy",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 2227.2,
             "target_tp2_pips": 4580.1,
             "target_sl_pips": 1670.4,
@@ -106,15 +116,17 @@
         "EURJPY=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 185.539,
-            "entry_zone_max": 185.539,
+            "entry_zone_min": 186.04401,
+            "entry_zone_max": 186.104,
             "market_state_snapshot": {
                 "analysis_price": 185.539,
                 "vwap": 185.25689,
                 "rsi": 13.39,
-                "atr_pips": 1263.6
+                "atr_pips": 1263.6,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 2527.2,
             "target_tp2_pips": 6620.0,
             "target_sl_pips": 1895.4,
@@ -126,15 +138,17 @@
         "GBPAUD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 1.88832,
-            "entry_zone_max": 1.88832,
+            "entry_zone_min": 1.88434,
+            "entry_zone_max": 1.88529,
             "market_state_snapshot": {
                 "analysis_price": 1.88832,
                 "vwap": 1.8794,
                 "rsi": 65.75,
-                "atr_pips": 13.2
+                "atr_pips": 13.2,
+                "macro_trend": "buy",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 26.4,
             "target_tp2_pips": 51.4,
             "target_sl_pips": 19.8,
@@ -146,15 +160,17 @@
         "EURGBP=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 0.86409,
-            "entry_zone_max": 0.86409,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 0.86409,
                 "vwap": 0.86534,
                 "rsi": 45.11,
-                "atr_pips": 3.9
+                "atr_pips": 3.9,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 10.0,
             "target_tp2_pips": 20.0,
             "target_sl_pips": 5.9,
@@ -166,15 +182,17 @@
         "AUDNZD=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 1.21536,
-            "entry_zone_max": 1.21536,
+            "entry_zone_min": 0.0,
+            "entry_zone_max": 0.0,
             "market_state_snapshot": {
                 "analysis_price": 1.21536,
                 "vwap": 1.21458,
                 "rsi": 71.69,
-                "atr_pips": 9.8
+                "atr_pips": 9.8,
+                "macro_trend": "buy",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 19.6,
             "target_tp2_pips": 26.9,
             "target_sl_pips": 14.7,
@@ -186,15 +204,17 @@
         "CHFJPY=X": {
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 201.936,
-            "entry_zone_max": 201.936,
+            "entry_zone_min": 202.944,
+            "entry_zone_max": 203.035,
             "market_state_snapshot": {
                 "analysis_price": 201.936,
                 "vwap": 202.58732,
                 "rsi": 14.75,
-                "atr_pips": 1918.6
+                "atr_pips": 1918.6,
+                "macro_trend": "sell",
+                "market_regime": "range"
             },
-            "expiration_utc": "2026-06-05 15:34:25",
+            "expiration_utc": "2026-06-05 15:43:56",
             "target_tp1_pips": 3837.1,
             "target_tp2_pips": 11929.9,
             "target_sl_pips": 2877.8,
