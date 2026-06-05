@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-06-05 07:58:11.482888 UTC",
+    "last_update": "2026-06-05 11:22:57.057028 UTC",
     "global_strategy": "SMC_OrderBlock_Mitigation",
     "assets": {
         "EURUSD=X": {
@@ -17,7 +17,7 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 5.6,
+            "target_sl_pips": 8.8,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -27,17 +27,17 @@
             "direction": "flat",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 30.0,
-            "target_sl_pips": 5.2,
+            "target_sl_pips": 4.2,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
         },
         "USDCAD=X": {
             "regime": "range",
-            "direction": "buy",
-            "target_tp1_pips": 30.9,
-            "target_tp2_pips": 103.0,
-            "target_sl_pips": 20.6,
+            "direction": "flat",
+            "target_tp1_pips": 15.0,
+            "target_tp2_pips": 30.0,
+            "target_sl_pips": 13.5,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
@@ -45,9 +45,9 @@
         "USDJPY=X": {
             "regime": "range",
             "direction": "buy",
-            "target_tp1_pips": 1133.1,
-            "target_tp2_pips": 3777.0,
-            "target_sl_pips": 755.4,
+            "target_tp1_pips": 1371.4,
+            "target_tp2_pips": 4571.5,
+            "target_sl_pips": 914.3,
             "risk_percent": 1.0,
             "is_crisis": true,
             "veto": ""
