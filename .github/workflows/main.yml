@@ -2,7 +2,7 @@ name: Sentinel Ultimate V4 Auto-Brain
 
 on:
   schedule:
-    - cron: '0 */2 * * *' 
+    - cron: '0 */1 * * *' 
   workflow_dispatch: 
 
 jobs:
