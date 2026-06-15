@@ -2,10 +2,8 @@ name: Sentinel Ultimate V4 Auto-Brain
 
 on:
   schedule:
-    # اجرای خودکار دقیقاً هر 2 ساعت یک‌بار (ساعات زوج)
     - cron: '0 */2 * * *' 
   workflow_dispatch: 
-    # این خط یک دکمه در گیت‌هاب اضافه می‌کند تا هر زمان خواستید دستی اجرایش کنید
 
 jobs:
   run-sentinel-brain:
@@ -23,18 +21,18 @@ jobs:
     - name: Install Advanced Trading Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pandas numpy yfinance requests scikit-learn scipy nltk xgboost transformers torch 
+        pip install pandas numpy yfinance requests scikit-learn scipy nltk xgboost transformers torch huggingface_hub
 
     - name: Execute Sentinel-AI Logic
-      # اجرای فایل پایتون شما
+      # ⚡️ در اینجا توکن از Secrets گیت‌هاب خوانده و به محیط پایتون تزریق می‌شود
       run: python sentinel_brain.py
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
     - name: Commit and Push Config for MetaTrader
-      # ذخیره فایل JSON تولید شده و پوش کردن آن روی سرور تا متاتریدر بتواند آن را بخواند
       run: |
         git config --global user.name "Sentinel-Bot"
         git config --global user.email "bot@sentinel.ai"
         git add sentinel_config.json
-        # اگر تغییری ایجاد شده بود کامیت کن، در غیر این صورت عبور کن
-        git diff-index --quiet HEAD || git commit -m "🤖 Auto-Update: Sentinel V4 Strategy [Skip CI]"
+        git diff-index --quiet HEAD || git commit -m "🤖 Auto-Update: Sentinel V15 Signal Data [Skip CI]"
         git push
