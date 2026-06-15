@@ -12,51 +12,47 @@ import xgboost as xgb
 import nltk
 from transformers import pipeline
 
+# دانلود دیتابیس کلمات پردازش زبان طبیعی (پشتیبان)
+nltk.download('vader_lexicon', quiet=True)
+
 # ======================================================================
-# 1. INSTITUTIONAL CONFIGURATION & TIME CORES (V14)
+# 1. INSTITUTIONAL CONFIGURATION & TIME CORES (V15 - Full Matrix)
 # ======================================================================
 
 TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN_HERE" 
 TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE"     
 
-# سبد جامع دارایی‌های جهانی (فارکس، طلا، کریپتو)
-# سبد جامع دارایی‌های جهانی (28 جفت‌ارز + طلا + کریپتو)
+# سبد جامع دارایی‌های جهانی (32 دارایی شامل تمام کراس‌ها، طلا و رمزارزهای دارای نوسان)
 SYMBOLS = [
-    # Majors (ماژورها)
+    # Majors
     "EURUSD=X", "GBPUSD=X", "AUDUSD=X", "NZDUSD=X", "USDCAD=X", "USDCHF=X", "USDJPY=X",
-    # Yen Crosses (کراس‌های ین)
+    # Yen Crosses
     "EURJPY=X", "GBPJPY=X", "AUDJPY=X", "NZDJPY=X", "CADJPY=X", "CHFJPY=X",
-    # Euro Crosses (کراس‌های یورو)
+    # Euro Crosses
     "EURGBP=X", "EURAUD=X", "EURNZD=X", "EURCAD=X", "EURCHF=X",
-    # Pound Crosses (کراس‌های پوند)
+    # Pound Crosses
     "GBPAUD=X", "GBPNZD=X", "GBPCAD=X", "GBPCHF=X",
-    # Other Crosses (سایر کراس‌ها)
+    # Other Crosses
     "AUDCAD=X", "AUDCHF=X", "AUDNZD=X", "NZDCAD=X", "NZDCHF=X", "CADCHF=X",
-    # Commodities & Crypto (کالا و رمزارز)
+    # Commodities & Crypto
     "GC=F", "ETH-USD", "LTC-USD", "DOGE-USD"
 ]
 
-
-# ریسک پیش‌فرض پایه
 DEFAULT_RISK_PERCENT = 1.0 
 
-# ساعات طلایی نقدینگی فارکس (کریپتو 24 ساعته است که در موتور لحاظ می‌شود)
 TRADING_HOURS = {
     "london_start": 7, 
     "new_york_end": 21
 }
 
 def is_market_liquid_now(symbol):
-    """
-    بررسی نقدینگی بازار. برای رمزارزها همیشه True است.
-    """
+    """ بررسی نقدینگی بازار """
     if "-USD" in symbol:
-        return True # بازار کریپتو همیشه باز و دارای نقدینگی است
+        return True 
         
     current_hour = datetime.datetime.utcnow().hour
     current_day = datetime.datetime.utcnow().weekday()
     
-    # تعطیلات آخر هفته برای فارکس و طلا
     if current_day >= 5: 
         return False
         
@@ -67,8 +63,8 @@ def is_market_liquid_now(symbol):
 
 def generate_signal_id(symbol, direction, timestamp_str):
     """
-    تولید یک هش یکتا برای سیگنال جهت جلوگیری از باز شدن پوزیشن‌های تکراری 
-    در اکسپرت MT5. (Anti-Duplicate System)
+    تولید هش یکتا (اثر انگشت سیگنال) برای جلوگیری از صدور اوردرهای تکراری.
+    این شناسه توسط اکسپرت در متاتریدر کش می‌شود تا سیگنال فقط ۱ بار اجرا شود.
     """
     raw_string = f"{symbol}_{direction}_{timestamp_str}"
     return hashlib.md5(raw_string.encode()).hexdigest()[:10]
@@ -131,7 +127,7 @@ def calculate_portfolio_correlation(symbols_list, lookback_days=10):
     return correlation_matrix
 
 # ======================================================================
-# 3. QUANTITATIVE INDICATORS, FVG & VSA
+# 3. QUANTITATIVE INDICATORS, FVG, VSA & SQUEEZE ENGINE
 # ======================================================================
 
 def calculate_vwap(df):
@@ -177,11 +173,11 @@ def calculate_bollinger_width(df, window=20):
     lower = ma - (std * 2)
     bb_width = (upper - lower) / ma
     return bb_width
+
 def detect_volatility_squeeze(df, window=20):
     """
-    تشخیص فشردگی بازار (Volatility Squeeze).
-    وقتی باند بولینگر به باریک‌ترین حالت خود در 20 کندل اخیر می‌رسد،
-    نشان‌دهنده تجمیع سفارشات بانک‌ها و آمادگی برای یک شکست (Breakout) بزرگ است.
+    تشخیص فشردگی بازار (Volatility Squeeze Engine V15).
+    تشخیص تجمیع سفارشات بانک‌ها قبل از حرکات انفجاری (Breakout).
     """
     if len(df) < window * 2:
         return False
@@ -190,10 +186,10 @@ def detect_volatility_squeeze(df, window=20):
     current_width = bb_width.iloc[-1]
     lowest_width_recent = bb_width.iloc[-window-5:-1].min()
     
-    # اگر فشردگی فعلی نزدیک به کمترین میزان فشردگی اخیر باشد
     if current_width <= (lowest_width_recent * 1.05):
         return True
     return False
+
 def detect_vsa_anomaly(df):
     """ تحلیل حجم و اسپرد (VSA) برای کشف ورود نهنگ‌ها """
     if len(df) < 20: 
@@ -232,16 +228,12 @@ def detect_fair_value_gaps(df, lookback=15):
                 fvgs["bearish"].append((recent['Low'].iloc[i-1], recent['High'].iloc[i+1]))
     return fvgs
 
-
-
 # ======================================================================
-# 4. GLOBAL CRISIS NLP ENGINE (FinBERT Deep Learning V14)
+# 4. GLOBAL CRISIS NLP ENGINE (FinBERT Deep Learning V15)
 # ======================================================================
 
-# بارگذاری مدل هوش مصنوعی در حافظه کش
 try:
     print("[INFO] Loading FinBERT Financial NLP Model...")
-    # از pipeline هاگینگ‌فیس برای تحلیل احساسات اقتصادی استفاده می‌کنیم
     finbert_nlp = pipeline("sentiment-analysis", model="ProsusAI/finbert")
 except Exception as e:
     print(f"[ERROR] Failed to load FinBERT: {e}")
@@ -250,34 +242,32 @@ except Exception as e:
 def analyze_crisis_news():
     """
     تحلیل عمیق اخبار با استفاده از شبکه عصبی FinBERT.
-    پشتیبانی کامل از فارکس، فلزات گرانبها و کریپتوکارنسی.
+    پشتیبانی از تمام 32 دارایی شامل ماژورها، کراس‌ها، طلا و رمزارزها.
     """
-    print("[INFO] Initializing V14 Deep NLP Matrix...")
+    print("[INFO] Initializing V15 Deep NLP Matrix...")
     
-    # منابع خبری جامع (فارکس + کریپتو + کلان اقتصادی)
     urls = [
-        "https://www.fxstreet.com/rss/news",               # Forex & Gold
-        "https://cointelegraph.com/rss",                   # Crypto Heavy
-        "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664" # Global Economy
+        "https://www.fxstreet.com/rss/news",               
+        "https://cointelegraph.com/rss",                   
+        "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664" 
     ]
     
-    # دیکشنری پیشرفته کلمات کلیدی برای تمامی دارایی‌ها
     asset_keywords = {
         "USD": ["FED", "FOMC", "CPI", "NFP", "POWELL", "US ", "TREASURY", "DOLLAR"],
         "EUR": ["ECB", "LAGARDE", "EUROZONE", "GERMANY", "FRANCE"],
         "GBP": ["BOE", "BAILEY", "UK ", "BRITAIN", "BREXIT"],
         "AUD": ["RBA", "AUSTRALIA", "AUSSIE", "SYDNEY"],
+        "NZD": ["RBNZ", "NEW ZEALAND", "KIWI", "WELLINGTON"],
         "CAD": ["BOC", "CANADA", "LOONIE", "OTTAWA", "OIL"],
         "JPY": ["BOJ", "YEN", "JAPAN", "TOKYO", "UEDA"],
-        "CHF": ["SNB", "SWISS", "FRANC", "ZURICH"],
+        "CHF": ["SNB", "SWISS", "FRANC", "ZURICH", "SWITZERLAND"],
         "XAU": ["GOLD", "OUNCE", "BULLION", "SAFE HAVEN", "XAU"],
         "ETH": ["ETHEREUM", "ETH", "VITALIK", "SMART CONTRACT", "GAS FEE"],
         "LTC": ["LITECOIN", "LTC", "CHARLIE LEE"],
         "DOGE": ["DOGECOIN", "DOGE", "ELON", "MUSK", "MEMECOIN"],
-        "CRYPTO_GEN": ["CRYPTO", "BITCOIN", "BTC", "SEC", "ETF", "BINANCE"] # تاثیر عمومی روی کل رمزارزها
+        "CRYPTO_GEN": ["CRYPTO", "BITCOIN", "BTC", "SEC", "ETF", "BINANCE"] 
     }
     
-    # کلمات بحرانی (اقتصادی، جنگ و کریپتو)
     crisis_categories = {
         "WAR_GEOPOLITIC": ['WAR', 'MISSILE', 'ATTACK', 'MILITARY', 'CEASEFIRE', 'INVASION', 'ESCALATION'],
         "ECONOMIC_CRASH": ['CRASH', 'BLACK SWAN', 'EMERGENCY RATE CUT', 'COLLAPSE', 'BANKRUPTCY', 'LIQUIDITY CRISIS'],
@@ -297,7 +287,6 @@ def analyze_crisis_news():
                 
             root = ET.fromstring(response.content)
             
-            # بررسی 40 خبر مهم از هر فید
             for item in root.findall('.//item')[:40]: 
                 title = (item.find('title').text or "")
                 desc = (item.find('description').text or "")
@@ -305,11 +294,9 @@ def analyze_crisis_news():
                 full_text = f"{title}. {desc}"
                 upper_text = full_text.upper()
                 
-                # استخراج امتیاز احساسات توسط هوش مصنوعی FinBERT
                 score = 0.0
                 if finbert_nlp:
                     try:
-                        # محدودیت 512 توکن برای جلوگیری از کرش کردن مدل
                         nlp_result = finbert_nlp(full_text[:500])[0] 
                         if nlp_result['label'] == 'positive':
                             score = nlp_result['score']
@@ -318,21 +305,17 @@ def analyze_crisis_news():
                     except:
                         pass
                 
-                # تخصیص امتیاز به دارایی‌های مرتبط
                 for asset, keywords in asset_keywords.items():
                     if any(kw in upper_text for kw in keywords):
                         sentiment_scores[asset].append(score)
                         
-                        # بررسی فعال‌سازی حالت بحران
                         for c_type, c_words in crisis_categories.items():
                             if any(cw in upper_text for cw in c_words):
                                 crisis_status[asset] = {"active": True, "type": c_type}
                                 
         except Exception as e: 
-            print(f"[WARNING] NLP Feed parsing error for URL {url[:30]}... : {e}")
             pass
 
-    # ساخت ماتریس نهایی
     final_matrix = {}
     for asset in asset_keywords.keys():
         avg_score = np.mean(sentiment_scores[asset]) if len(sentiment_scores[asset]) > 0 else 0.0
@@ -430,12 +413,12 @@ def run_ml_prediction_for_asset(df):
     return prediction_probability
 
 # ======================================================================
-# 7. QUANTUM ENGINE V14: MAIN STRATEGY & EXECUTION
+# 7. QUANTUM ENGINE V15: MAIN STRATEGY & EXECUTION (The Core)
 # ======================================================================
 
 def generate_god_mode_strategy():
     run_time_utc = datetime.datetime.utcnow()
-    print(f"\n[START] Quantum Engine V14 - {run_time_utc.strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"\n[START] Quantum Engine V15 - {run_time_utc.strftime('%Y-%m-%d %H:%M UTC')}")
     
     news_matrix = analyze_crisis_news()
     corr_matrix = calculate_portfolio_correlation(SYMBOLS)
@@ -466,12 +449,12 @@ def generate_god_mode_strategy():
         
         target_trend = macro_trend if (macro_trend == micro_trend) else "flat"
         
-                df_m15['vwap'] = calculate_vwap(df_m15)
+        df_m15['vwap'] = calculate_vwap(df_m15)
         df_m15['bb_width'] = calculate_bollinger_width(df_m15)
         poc_current = calculate_poc(df_m15, lookback=100)
         
         # ======================================================================
-        # سیستم هوشمند تشخیص ضریب پیپ (پشتیبانی از تمام کراس‌ها)
+        # سیستم هوشمند تشخیص ضریب پیپ (پشتیبانی از تمام 32 دارایی)
         # ======================================================================
         is_jpy_pair = "JPY" in symbol
         if is_jpy_pair:
@@ -500,7 +483,7 @@ def generate_god_mode_strategy():
         fvgs = detect_fair_value_gaps(df_m15)
         ob_data = detect_institutional_order_blocks(df_m15)
         vsa_anomaly = detect_vsa_anomaly(df_m15) 
-        is_squeezing = detect_volatility_squeeze(df_m15) # ⚡️ قدرت جدید
+        is_squeezing = detect_volatility_squeeze(df_m15) 
         
         if not ob_data: 
             continue
@@ -514,7 +497,7 @@ def generate_god_mode_strategy():
         current_vwap = current['vwap']
         current_rsi = calculate_rsi(df_m15['Close']).iloc[-2]
         
-        # استخراج ارز پایه و مظنه 
+        # استخراج ارز پایه و مظنه برای اتصال به NLP
         clean_sym = symbol.replace("=X", "").replace("-", "")
         if symbol == "GC=F":
             base_curr, quote_curr = "XAU", "USD"
@@ -619,7 +602,7 @@ def generate_god_mode_strategy():
             win_prob = ml_prob_up if direction == "buy" else (1 - ml_prob_up)
             active_risk = calculate_kelly_criterion(win_prob, tp1_pips, sl_pips)
             
-            # ضریب ریسک تصاعدی: اگر نهنگ‌ها (VSA) وارد شده‌اند + بازار در حالت فشردگی (Squeeze) است
+            # ضریب ریسک تصاعدی برای VSA و Squeeze
             if vsa_anomaly and is_squeezing: 
                 active_risk = round(min(active_risk * 1.5, 3.0), 2)
             elif vsa_anomaly:
@@ -637,7 +620,7 @@ def generate_god_mode_strategy():
 
         signal_expiry_str = (run_time_utc + timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')
         
-        # ⚡️ سپر ضد-تکرار: ساخت هش امنیتی بی‌نقص برای قفل کردن اکسپرت متاتریدر
+        # ⚡️ سپر ضد-تکرار قطعی: شناسه هش یکتا
         sig_id = generate_signal_id(symbol, direction, signal_expiry_str) if direction != "flat" else "N/A"
 
         snapshot = {
@@ -651,7 +634,7 @@ def generate_god_mode_strategy():
 
         portfolio_results[symbol] = {
             "signal_id": sig_id,
-            "execution_lock": True if direction != "flat" else False, # برای اکسپرت: اطمینان از یکبار اجرا
+            "execution_lock": True if direction != "flat" else False,
             "regime": market_regime,
             "direction": direction,
             "entry_zone_min": entry_zone_min,
@@ -664,17 +647,16 @@ def generate_god_mode_strategy():
             "risk_percent": active_risk,            
             "is_crisis": is_crisis,
             "vsa_confirmed": bool(vsa_anomaly),
-            "squeeze_breakout": bool(is_squeezing), # وضعیت فشردگی برای گزارش تلگرام
+            "squeeze_breakout": bool(is_squeezing), 
             "veto": veto_reason
         }
-
 
     # ======================================================================
     # 8. MASTER JSON EXPORT & TELEGRAM REPORTING
     # ======================================================================
     output_data = {
         "last_update": run_time_utc.strftime('%Y-%m-%d %H:%M:%S'),
-        "global_strategy": "Quantum_Engine_V14",
+        "global_strategy": "Quantum_Engine_V15_FullMatrix",
         "assets": portfolio_results
     }
     
@@ -685,18 +667,19 @@ def generate_god_mode_strategy():
     except Exception as e: 
         print(f"[ERROR] JSON Save failed: {e}")
         
-    msg = f"<b>🌍 Quantum Engine V14 Live Feed</b>\n"
+    msg = f"<b>🌍 Quantum Engine V15 Live Feed</b>\n"
     msg += f"⏱ {run_time_utc.strftime('%H:%M UTC')}\n"
     msg += "━━━━━━━━━━━━━━━━━━━━━━\n"
     
     for sym, data in portfolio_results.items():
-        clean_sym = sym.replace("=X", "") 
+        clean_sym = sym.replace("=X", "").replace("-USD", "") 
         mode_icon = "🚨 CRISIS" if data.get('is_crisis', False) else "🛡 SMC"
         vol_icon = "🔥 VSA" if data.get('vsa_confirmed', False) else "📊"
+        sqz_icon = "⚡️ SQUEEZE" if data.get('squeeze_breakout', False) else ""
         
         if data['direction'] != "flat":
             msg += f"🟢 <b>{clean_sym}</b>: <b>{data['direction'].upper()}</b> [{mode_icon}]\n"
-            msg += f"   🎯 Zone: {data['entry_zone_min']} ↔️ {data['entry_zone_max']} [{vol_icon}]\n"
+            msg += f"   🎯 Zone: {data['entry_zone_min']} ↔️ {data['entry_zone_max']} [{vol_icon}] {sqz_icon}\n"
             msg += f"   🎯 TP1: {data['target_tp1_pips']} | TP2: {data['target_tp2_pips']}\n"
             msg += f"   🛑 SL: {data['target_sl_pips']} | ⚖️ Risk: {data['risk_percent']}%\n"
             msg += f"   🆔 ID: <code>{data['signal_id']}</code>\n"
@@ -708,7 +691,7 @@ def generate_god_mode_strategy():
         msg += "━━━━━━━━━━━━━━━━━━━━━━\n"
             
     send_telegram_alert(msg)
-    print("\n[SUCCESS] Quantum Engine V14 Execution Completed.")
+    print("\n[SUCCESS] Quantum Engine V15 Execution Completed.")
 
 if __name__ == "__main__":
     generate_god_mode_strategy()
