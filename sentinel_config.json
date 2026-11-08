@@ -1,5 +1,5 @@
 {
-    "last_update": "2026-11-08 17:10:14",
+    "last_update": "2026-11-08 21:17:21",
     "global_strategy": "Quantum_Engine_V15_FullMatrix",
     "assets": {
         "EURUSD=X": {
@@ -17,7 +17,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.1,
             "target_tp2_pips": 39.9,
             "target_sl_pips": 3.9,
@@ -42,7 +42,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.9,
             "target_tp2_pips": 48.3,
             "target_sl_pips": 4.4,
@@ -67,7 +67,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.0,
             "target_tp2_pips": 26.5,
             "target_sl_pips": 3.5,
@@ -92,7 +92,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.0,
             "target_tp2_pips": 17.8,
             "target_sl_pips": 3.0,
@@ -117,7 +117,7 @@
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 18.0,
             "target_tp2_pips": 78.0,
             "target_sl_pips": 13.5,
@@ -142,7 +142,7 @@
                 "macro_trend": "flat",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 8.0,
             "target_tp2_pips": 24.0,
             "target_sl_pips": 6.0,
@@ -162,12 +162,12 @@
             "market_state_snapshot": {
                 "analysis_price": 158.45,
                 "vwap": 157.82724,
-                "rsi": 70.24,
+                "rsi": 70.78,
                 "atr_pips": 6.3,
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 12.6,
             "target_tp2_pips": 45.7,
             "target_sl_pips": 9.5,
@@ -186,13 +186,13 @@
             "entry_zone_max": 176.58501,
             "market_state_snapshot": {
                 "analysis_price": 176.58501,
-                "vwap": 176.71019,
+                "vwap": 176.71018,
                 "rsi": 63.43,
                 "atr_pips": 8.9,
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 17.7,
             "target_tp2_pips": 38.8,
             "target_sl_pips": 13.3,
@@ -217,7 +217,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 20.1,
             "target_tp2_pips": 65.6,
             "target_sl_pips": 15.1,
@@ -236,13 +236,13 @@
             "entry_zone_max": 108.794,
             "market_state_snapshot": {
                 "analysis_price": 108.794,
-                "vwap": 110.53541,
-                "rsi": 61.02,
+                "vwap": 110.53542,
+                "rsi": 61.06,
                 "atr_pips": 7.5,
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 15.0,
             "target_tp2_pips": 40.1,
             "target_sl_pips": 11.3,
@@ -267,7 +267,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 10.9,
             "target_tp2_pips": 59.2,
             "target_sl_pips": 8.2,
@@ -292,7 +292,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 17.1,
             "target_tp2_pips": 53.4,
             "target_sl_pips": 12.8,
@@ -317,7 +317,7 @@
                 "macro_trend": "flat",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 19.7,
             "target_tp2_pips": 62.0,
             "target_sl_pips": 14.8,
@@ -342,7 +342,7 @@
                 "macro_trend": "flat",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.5,
             "target_tp2_pips": 13.6,
             "target_sl_pips": 4.1,
@@ -367,7 +367,7 @@
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 23.4,
             "target_tp2_pips": 53.1,
             "target_sl_pips": 17.5,
@@ -392,7 +392,7 @@
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 21.6,
             "target_tp2_pips": 79.4,
             "target_sl_pips": 16.2,
@@ -417,7 +417,7 @@
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 16.4,
             "target_tp2_pips": 63.1,
             "target_sl_pips": 12.3,
@@ -442,7 +442,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 13.6,
             "target_tp2_pips": 13.9,
             "target_sl_pips": 10.2,
@@ -467,7 +467,7 @@
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 19.2,
             "target_tp2_pips": 62.0,
             "target_sl_pips": 14.4,
@@ -492,7 +492,7 @@
                 "macro_trend": "buy",
                 "market_regime": "trending"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 26.4,
             "target_tp2_pips": 111.7,
             "target_sl_pips": 19.8,
@@ -512,12 +512,12 @@
             "market_state_snapshot": {
                 "analysis_price": 1.88611,
                 "vwap": 1.87548,
-                "rsi": 43.56,
+                "rsi": 43.43,
                 "atr_pips": 7.3,
                 "macro_trend": "buy",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 14.6,
             "target_tp2_pips": 69.6,
             "target_sl_pips": 10.9,
@@ -542,7 +542,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 16.7,
             "target_tp2_pips": 24.8,
             "target_sl_pips": 12.6,
@@ -567,7 +567,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 25.9,
             "target_tp2_pips": 46.9,
             "target_sl_pips": 19.4,
@@ -592,7 +592,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 19.5,
             "target_tp2_pips": 30.7,
             "target_sl_pips": 14.7,
@@ -617,7 +617,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 16.0,
             "target_tp2_pips": 52.0,
             "target_sl_pips": 12.0,
@@ -642,7 +642,7 @@
                 "macro_trend": "flat",
                 "market_regime": "trending"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 10.5,
             "target_tp2_pips": 54.1,
             "target_sl_pips": 7.9,
@@ -667,7 +667,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 8.6,
             "target_tp2_pips": 29.2,
             "target_sl_pips": 6.5,
@@ -692,7 +692,7 @@
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 17.2,
             "target_tp2_pips": 34.6,
             "target_sl_pips": 12.9,
@@ -711,13 +711,13 @@
             "entry_zone_max": 4074.19995,
             "market_state_snapshot": {
                 "analysis_price": 4074.19995,
-                "vwap": 4026.43986,
-                "rsi": 54.83,
+                "vwap": 4026.43743,
+                "rsi": 55.12,
                 "atr_pips": 52.5,
                 "macro_trend": "buy",
                 "market_regime": "trending"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 105.0,
             "target_tp2_pips": 391.0,
             "target_sl_pips": 78.8,
@@ -732,23 +732,23 @@
             "execution_lock": false,
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 2227.93994,
-            "entry_zone_max": 2227.93994,
+            "entry_zone_min": 2232.34009,
+            "entry_zone_max": 2234.47998,
             "market_state_snapshot": {
-                "analysis_price": 2227.93994,
-                "vwap": 2291.3961,
-                "rsi": 31.99,
-                "atr_pips": 38.5,
+                "analysis_price": 2223.08008,
+                "vwap": 2290.92698,
+                "rsi": 40.05,
+                "atr_pips": 35.8,
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
-            "target_tp1_pips": 77.1,
-            "target_tp2_pips": 150.5,
-            "target_sl_pips": 57.8,
+            "expiration_utc": "2026-11-08 23:17:21",
+            "target_tp1_pips": 71.6,
+            "target_tp2_pips": 197.7,
+            "target_sl_pips": 53.7,
             "risk_percent": 1.0,
             "is_crisis": true,
-            "vsa_confirmed": true,
+            "vsa_confirmed": false,
             "squeeze_breakout": false,
             "veto": ""
         },
@@ -757,24 +757,24 @@
             "execution_lock": false,
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 51.471,
-            "entry_zone_max": 51.471,
+            "entry_zone_min": 51.805,
+            "entry_zone_max": 51.869,
             "market_state_snapshot": {
-                "analysis_price": 51.471,
-                "vwap": 55.56765,
-                "rsi": 31.5,
-                "atr_pips": 16.6,
+                "analysis_price": 51.467,
+                "vwap": 55.51246,
+                "rsi": 55.32,
+                "atr_pips": 13.4,
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
-            "target_tp1_pips": 33.2,
-            "target_tp2_pips": 85.3,
-            "target_sl_pips": 24.9,
+            "expiration_utc": "2026-11-08 23:17:21",
+            "target_tp1_pips": 26.8,
+            "target_tp2_pips": 60.4,
+            "target_sl_pips": 20.1,
             "risk_percent": 1.0,
             "is_crisis": true,
-            "vsa_confirmed": true,
-            "squeeze_breakout": false,
+            "vsa_confirmed": false,
+            "squeeze_breakout": true,
             "veto": ""
         },
         "DOGE-USD": {
@@ -782,23 +782,23 @@
             "execution_lock": false,
             "regime": "range",
             "direction": "flat",
-            "entry_zone_min": 0.07092,
-            "entry_zone_max": 0.07092,
+            "entry_zone_min": 0.07117,
+            "entry_zone_max": 0.07134,
             "market_state_snapshot": {
-                "analysis_price": 0.07092,
-                "vwap": 0.07547,
-                "rsi": 37.68,
-                "atr_pips": 1.9,
+                "analysis_price": 0.07098,
+                "vwap": 0.07545,
+                "rsi": 52.94,
+                "atr_pips": 1.8,
                 "macro_trend": "sell",
                 "market_regime": "range"
             },
-            "expiration_utc": "2026-11-08 19:10:14",
+            "expiration_utc": "2026-11-08 23:17:21",
             "target_tp1_pips": 5.0,
             "target_tp2_pips": 10.0,
             "target_sl_pips": 3.0,
             "risk_percent": 1.0,
             "is_crisis": false,
-            "vsa_confirmed": true,
+            "vsa_confirmed": false,
             "squeeze_breakout": false,
             "veto": ""
         }
